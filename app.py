@@ -44,8 +44,7 @@ elif religion != "הכל":
     file_name = "directed_association_rules_יהודים_cities.xlsx" if religion == "יהודי" else "directed_association_rules_נוצרים_cities.xlsx"
 
 # 🟩 טעינת הקובץ לפי המסלול
-folder = r"C:\Users\daniel\Desktop\אסוסיאיישן רולס קבוצות"  # שנה בהתאם למחשב שלך
-file_path = os.path.join(folder, file_name)
+file_path = file_name  
 
 try:
     df = pd.read_excel(file_path)
