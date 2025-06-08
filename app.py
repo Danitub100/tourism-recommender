@@ -6,37 +6,7 @@ from PIL import Image
 # 🟢 קונפיגורציה כללית לעמוד
 st.set_page_config(page_title="🔗 קשרים בין ערים בישראל", layout="wide")
 
-# 🖋️ עיצוב מותאם לגודל טקסט בשדות + מיקום מרכזי
-st.markdown("""
-    <style>
-    /* גודל טקסט לשדות בחירה */
-    div[class*="stSelectbox"] > label,
-    div[class*="stNumberInput"] > label {
-        font-size: 100px !important;
-        font-weight: bold;
-        text-align: center !important;
-        display: block;
-    }
-    /* כפתור */
-    button[kind="primary"] {
-        font-size: 100px !important;
-    }
-    /* אינפוט */
-    .stTextInput > div > input {
-        font-size: 100px !important;
-    }
-    /* תוכן התיבה (בחירה) */
-    .stSelectbox div[data-baseweb="select"] {
-        font-size: 100px !important;
-    }
-    /* טקסט כללי */
-    .stMarkdown {
-        font-size: 100px !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# 🔵 באנר עליון
+# 🔵 רקע / באנר עליון
 st.markdown("""
     <div style='background-color:#EAF4FF;padding:30px;border-radius:10px;margin-bottom:30px;'>
         <h1 style='color:#003366;text-align:center;'>🔗 קשרים בין ערים בישראל</h1>
@@ -74,8 +44,8 @@ elif religion != "הכל":
     file_name = "directed_association_rules_יהודים_cities.xlsx" if religion == "יהודי" else "directed_association_rules_נוצרים_cities.xlsx"
 
 # 🟩 טעינת הקובץ לפי המסלול
-file_path = file_name  # כל הקבצים נמצאים ישירות בתיקייה עם app.py
-
+folder = r"C:\Users\daniel\Desktop\אסוסיאיישן רולס קבוצות"  # שנה בהתאם למחשב שלך
+file_path = os.path.join(folder, file_name)
 
 try:
     df = pd.read_excel(file_path)
@@ -102,6 +72,11 @@ st.session_state.selected_data = {
     "confidence_threshold": confidence_threshold,
     "origin_city": None if origin_city == "- אין בחירה -" else origin_city
 }
+
+# 🖼️ תצוגת תמונת רקע או קישוט ויזואלי (אופציונלי)
+# אפשר גם להוסיף תמונות של ערים ישראליות בעתיד או באנר עליון
+# image = Image.open("background_israel.jpg")
+# st.image(image, use_column_width=True)
 
 st.markdown("---")
 
@@ -165,7 +140,7 @@ city_coords = {
     'נצרת': (32.6996, 35.3035),
     'עכו': (32.9236, 35.0713),
     'קיסריה': (32.5000, 34.9100),
-    'תל אביב יפו': (32.0853, 34.7718),
+    'תל אביב יפו': (31.9853, 34.6718),
     'תמר': (31.1962, 35.3734)
 }
 
