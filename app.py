@@ -30,9 +30,11 @@ with st.container():
 st.markdown("#### 🎯 הגדרת פרמטרים")
 col4, col5 = st.columns(2)
 with col4:
-   support_threshold = st.number_input("📊 אחוז תמיכה (Support)", min_value=0, max_value=100, value=5, step=1) / 100
+    support_threshold_percent = st.number_input("📊 אחוז תמיכה (Support) %", min_value=0, max_value=100, value=5, step=1)
+    support_threshold = support_threshold_percent / 100
 with col5:
-    confidence_threshold = confidence_threshold = st.number_input("🔐 אחוז ביטחון (Confidence)", min_value=0, max_value=100, value=40, step=1) / 100
+    confidence_threshold_percent = st.number_input("🔐 אחוז ביטחון (Confidence) %", min_value=0, max_value=100, value=40, step=1)
+    confidence_threshold = confidence_threshold_percent / 100
 
 
 # 🟧 בחירת קובץ
@@ -46,6 +48,7 @@ elif religion != "הכל":
 
 # 🟩 טעינת הקובץ לפי המסלול
 file_path = file_name  
+
 try:
     df = pd.read_excel(file_path)
 except FileNotFoundError:
@@ -96,11 +99,16 @@ if filtered_df.empty:
     st.warning("לא נמצאו קשרים התואמים את הקריטריונים שבחרת.")
     st.stop()
 
-# הצגת טבלה בלי Intersection ו-Lift, ממוינת לפי Support
+# הצגת טבלה בלי Intersection ו-Lift, ממוינת לפי Support באחוזים
 st.markdown("### טבלת חוקי אסוציאציה מסוננת")
 table_to_show = filtered_df.drop(columns=["Intersection", "Lift"], errors='ignore')
 table_to_show = table_to_show.sort_values(by="Support", ascending=False).reset_index(drop=True)
+
+table_to_show["Support"] = (table_to_show["Support"] * 100).round(1).astype(str) + "%"
+table_to_show["Confidence"] = (table_to_show["Confidence"] * 100).round(1).astype(str) + "%"
+
 st.dataframe(table_to_show, use_container_width=True)
+
 
 # מקרא צבעים
 st.markdown("### מקרא צבעים לפי Confidence:")
@@ -204,4 +212,4 @@ fig.update_layout(
         fitbounds="locations"
     )
 )
-st.plotly_chart(fig, use_con
+st.plotly_chart(fig, use_container_width=True)
