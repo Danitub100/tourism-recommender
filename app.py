@@ -11,7 +11,7 @@ st.markdown("""
     <div style='background-color:#EAF4FF;padding:30px;border-radius:10px;margin-bottom:30px;'>
         <h1 style='color:#003366;text-align:center;'>🔗 קשרים בין ערים בישראל</h1>
         <p style='text-align:center;font-size:18px;'>
-            מערכת המלצות אינטראקטיבית: בחר קבוצת תיירים, רף תמיכה וביטחון, ועיר יעד - וקבל תובנות חכמות ומפה אינטראקטיבית.
+            מערכת המלצות אינטראקטיבית: בחר קבוצת תיירים, רף תמיכה וביטחון, ועיר יעד - וקבל תובנות חכמות ומפה אינטראקטיבית
         </p>
     </div>
 """, unsafe_allow_html=True)
@@ -30,9 +30,10 @@ with st.container():
 st.markdown("#### 🎯 הגדרת פרמטרים")
 col4, col5 = st.columns(2)
 with col4:
-    support_threshold = st.number_input("📊 אחוז תמיכה (Support)", min_value=0.0, max_value=1.0, value=0.05, step=0.01)
+   support_threshold = st.number_input("📊 אחוז תמיכה (Support)", min_value=0, max_value=100, value=5, step=1) / 100
 with col5:
-    confidence_threshold = st.number_input("🔐 אחוז ביטחון (Confidence)", min_value=0.0, max_value=1.0, value=0.4, step=0.05)
+    confidence_threshold = confidence_threshold = st.number_input("🔐 אחוז ביטחון (Confidence)", min_value=0, max_value=100, value=40, step=1) / 100
+
 
 # 🟧 בחירת קובץ
 file_name = "directed_association_rules_cities.xlsx"
@@ -45,10 +46,8 @@ elif religion != "הכל":
 
 # 🟩 טעינת הקובץ לפי המסלול
 file_path = file_name  
-
 try:
     df = pd.read_excel(file_path)
-    
 except FileNotFoundError:
     st.error(f"❌ שגיאה: הקובץ לא נמצא ({file_name})")
     st.stop()
@@ -205,4 +204,4 @@ fig.update_layout(
         fitbounds="locations"
     )
 )
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, use_con
