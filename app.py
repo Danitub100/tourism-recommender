@@ -48,7 +48,7 @@ file_path = file_name
 
 try:
     df = pd.read_excel(file_path)
-    st.success(f"✅ הקובץ נטען בהצלחה: {file_name}")
+    
 except FileNotFoundError:
     st.error(f"❌ שגיאה: הקובץ לא נמצא ({file_name})")
     st.stop()
